@@ -1,0 +1,27 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+spring:
+  security:    # actuator 접근용 user 추가.
+    user:
+      name: myAdmin
+      password: myAdmin
+      roles:
+        - ADMIN
+  boot:
+    admin:
+      client:
+        username: testUser   # 서버 모듈의 id,pw 를 적어줘야함.
+        password: testUser
+        url: http://127.0.0.1:9090  # metric 정보를 보낼 서버의 url 을 기입함.
+        instance:
+          metadata:  # 클라이언트의 /actuator 에 접속하기 위한 id,pw 를 spring boot admin에 알려주기 위함.
+            user:
+              name: ${spring.security.user.name}
+              password: ${spring.security.user.password}
+#          prefer-ip: true     # 클라이언트의 ip 를 요청에 사용할지 여부.
+
+
